@@ -1,0 +1,18 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% block title %}{% trans "Confirmar eliminación" %}{% endblock %}
+{% block content %}
+<h1>{% trans "Estás seguro de que deseas eliminar los objetos seleccionados?" %}</h1>
+<p>{% trans "Estas acciones no se pueden deshacer." %}</p>
+<form action="" method="post">{% csrf_token %}
+    <input type="hidden" name="post" value="yes" />
+    <input type="hidden" name="action" value="delete_selected" />
+    {% for obj in queryset %}
+        <input type="hidden" name="objects" value="{{ obj|escape }}" />
+    {% endfor %}
+    <div class="button-group">
+        <input type="submit" value="{% trans 'Sí, estoy seguro' %}" class="default" />
+        <a href="{% url 'admin:index' %}" class="button">{% trans 'Cancelar' %}</a>
+    </div>
+</form>
+{% endblock %}
